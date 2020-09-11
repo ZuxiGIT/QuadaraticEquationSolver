@@ -2,12 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <assert.h>
 
 
-#define INF 	-1
-#define FALSE 	 0
-#define TRUE	 1
-#define NOROOTS	-2
+enum RESULT
+{
+	INF = -1,
+	FALSE = 0,
+	TRUE = 1,
+	NOROOTS = -2
+};
 
 
 const double precision = 1e-5;
@@ -15,6 +19,8 @@ const double precision = 1e-5;
 
 void Input(double* coeff_mass)
 {
+	assert(coeff_mass);
+
 	char buff_char = '0';
 
 	for(int i = 0; i < 3; i ++)
@@ -39,6 +45,22 @@ char Compare_Doubles(double num1, double num2)
 		return TRUE;
 	else
 		return FALSE;
+}
+
+
+char zero_compare(double num)
+{
+	union { 
+		double doub;
+		long long ll;
+	} exp;
+	exp.doub = num;
+
+	int res = (exp.ll & (long long) 0xfff << 52 ) >> 52;
+	if (res == 0x0 || res == 0x8000)
+		return 1;
+
+	return 0;
 }
 
 
@@ -69,12 +91,12 @@ char SquareEqSolver(double* roots, double a, double b, double c)
 	double* x1 = roots;
 	double* x2 = roots + 1;
 	
-	if(Compare_Doubles(a, 0.))
+	if(zero_compare(a))
 		return LinearEqSolver(roots, b, c);
 
-	if(Compare_Doubles(b, 0.))  
+	if(zero_compare(b))  
 	{	
-		if(Compare_Doubles(c, 0.)) 
+		if(zero_compare(c)) 
 		{
 			*x1 = *x2 = 0;
 			return 1;
@@ -126,12 +148,13 @@ void PrintResult(double* roots, double* coeff_mass)
 
 int main()
 {
-	double* coeff_mass = (double*)calloc(3, sizeof(double));
-	double* roots = (double*)calloc(2, sizeof(double));
+
+	double* coeff_mass = new double[3];
+	double* roots = new double[2];
 	Input(coeff_mass);
 	PrintResult(roots, coeff_mass);
 
-	free(coeff_mass);
-	free(roots);
+	delete[] coeff_mass;
+	delete[] roots;
 	return 0;
 }
