@@ -34,10 +34,10 @@ void Input(double* coeff_mass)
 
 char Compare_Doubles(double num1, double num2)
 {
-    if(num1 - num2 > -1 * precision && num1 - num2 < precision)
-        return TRUE;
-    else
-        return FALSE;
+	if(num1 - num2 > -1 * precision && num1 - num2 < precision)
+		return TRUE;
+	else
+		return FALSE;
 }
 
 char LinearEqSolver(double* roots, double a, double b)
