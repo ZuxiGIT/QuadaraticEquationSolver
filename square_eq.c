@@ -3,17 +3,17 @@
 #include <string.h>
 #include <math.h>
 
-#define INF -1
+
+#define INF 	-1
 #define FALSE 	 0
 #define TRUE	 1
-#define NOROOTS	 -2
+#define NOROOTS	-2
 
 const double precision = 1e-5;
 
 
 void Input(double* coeff_mass)
 {
-
 	char buff_char = '0';
 
 	for(int i = 0; i < 3; i ++)
@@ -40,9 +40,9 @@ char Compare_Doubles(double num1, double num2)
 		return FALSE;
 }
 
+
 char LinearEqSolver(double* roots, double a, double b)
 {
-
 	double* x1 = roots;
 	double* x2 = roots + 1;
 
@@ -59,9 +59,10 @@ char LinearEqSolver(double* roots, double a, double b)
 			if(Compare_Doubles(*x1, 0.))
 				*x1 = 0;
 			return 1;
-		}
-	
+		}	
 }
+
+
 char SquareEqSolver(double* roots, double a, double b, double c)
 {
 	double* x1 = roots;
@@ -102,6 +103,7 @@ char SquareEqSolver(double* roots, double a, double b, double c)
 	return 2;
 }
 
+
 void PrintResult(double* roots, double* coeff_mass)
 {
 	switch(SquareEqSolver(roots, coeff_mass[0], coeff_mass[1], coeff_mass[2]))
@@ -119,9 +121,10 @@ void PrintResult(double* roots, double* coeff_mass)
 			printf("This eq has 2 roots %lg and %lg\n", roots[0], roots[1]);
 	}
 }
+
+
 int main()
 {
-
 	double* coeff_mass = (double*)calloc(3, sizeof(double));
 	double* roots = (double*)calloc(2, sizeof(double));
 	Input(coeff_mass);
