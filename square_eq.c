@@ -9,6 +9,7 @@
 #define TRUE	 1
 #define NOROOTS	-2
 
+
 const double precision = 1e-5;
 
 
@@ -54,12 +55,12 @@ char LinearEqSolver(double* roots, double a, double b)
 		else
 			return NOROOTS;
 	else
-		{
-			*x1 = -b / a;
-			if(Compare_Doubles(*x1, 0.))
-				*x1 = 0;
-			return 1;
-		}	
+	{
+		*x1 = -b / a;
+		if(Compare_Doubles(*x1, 0.))
+			*x1 = 0;
+		return 1;
+	}	
 }
 
 
@@ -73,7 +74,6 @@ char SquareEqSolver(double* roots, double a, double b, double c)
 
 	if(Compare_Doubles(b, 0.))  
 	{	
-
 		if(Compare_Doubles(c, 0.)) 
 		{
 			*x1 = *x2 = 0;
@@ -86,7 +86,6 @@ char SquareEqSolver(double* roots, double a, double b, double c)
 			return 2;
 		}
 		return NOROOTS;
-
 	}
 	
 	double discr = b*b - 4*a*c;
@@ -100,6 +99,7 @@ char SquareEqSolver(double* roots, double a, double b, double c)
 	
 	if(*x1 == *x2)
 		return 1;
+
 	return 2;
 }
 
@@ -119,6 +119,7 @@ void PrintResult(double* roots, double* coeff_mass)
 			break;
 		case 2:
 			printf("This eq has 2 roots %lg and %lg\n", roots[0], roots[1]);
+			break;
 	}
 }
 
@@ -129,5 +130,8 @@ int main()
 	double* roots = (double*)calloc(2, sizeof(double));
 	Input(coeff_mass);
 	PrintResult(roots, coeff_mass);
+
+	free(coeff_mass);
+	free(roots);
 	return 0;
 }
