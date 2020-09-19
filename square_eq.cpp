@@ -53,10 +53,10 @@ char zero_compare(double num)
 	union { 
 		double doub;
 		long long ll;
-	} exp;
-	exp.doub = num;
+	};
+	doub = num;
 
-	int res = (exp.ll & (long long) 0xfff << 52 ) >> 52;
+	int res = (ll & (long long) 0xfff << 52 ) >> 52;
 	if (res == 0x0 || res == 0x8000)
 		return 1;
 
@@ -66,6 +66,7 @@ char zero_compare(double num)
 
 char LinearEqSolver(double* roots, double a, double b)
 {
+	printf("It is a Linear eq.");
 	double* x1 = roots;
 	double* x2 = roots + 1;
 
@@ -111,7 +112,7 @@ char SquareEqSolver(double* roots, double a, double b, double c)
 	}
 	
 	double discr = b*b - 4*a*c;
-	
+
 	if(discr < 0)
 		return NOROOTS;
 
